@@ -1,0 +1,28 @@
+
+CREATE TABLE categories (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  description TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE items (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  name VARCHAR(150) NOT NULL,
+  description TEXT,
+  brand VARCHAR(100),
+  model VARCHAR(100),
+  sku VARCHAR(50) NOT NULL UNIQUE,
+  price NUMERIC(10, 2) NOT NULL CHECK (price >= 0),
+  stock_quantity INTEGER NOT NULL DEFAULT 0 CHECK (stock_quantity >= 0),
+  image_url TEXT,
+  specifications TEXT,
+  category_id INTEGER NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT fk_category
+    FOREIGN KEY (category_id)
+    REFERENCES categories(id)
+    ON DELETE RESTRICT
+);
