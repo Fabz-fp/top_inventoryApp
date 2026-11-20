@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore musical instruments and audio equipment at SoundBurrow.">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include("partials/header.ejs") %>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Find Your Sound</h1>
+      <p>Explore instruments and equipment to bring your music to life.</p>
+    </section>
+
+    <section class="categories-section">
+      <h2>Browse Categories</h2>
+
+      <% if (categories.length === 0) { %>
+        <p>No categories available yet.</p>
+      <% } else { %>
+        <div class="category-grid">
+          <% categories.forEach((category) => { %>
+            <article class="category-card">
+              <h3>
+                <a href="/categories/<%= category.id %>">
+                  <%= category.name %>
+                </a>
+              </h3>
+
+              <p><%= category.description || "Explore our collection." %></p>
+            </article>
+          <% }) %>
+        </div>
+      <% } %>
+    </section>
+  </main>
+
+  <%- include("partials/footer.ejs") %>
+</body>
+</html>
