@@ -17,6 +17,18 @@ async function getCategoryById(id) {
   return rows[0];
 }
 
+async function createCategory(name, description) {
+  const { rows } = await pool.query(
+    `INSERT INTO categories (name, description)
+    VALUES ($1, $2)
+    RETURNING *`,
+    [name, description || null]
+  );
+
+  return rows[0];
+}
+
+// ITEMS
 async function getItemsByCategory(categoryId) {
   const { rows } = await pool.query(
     "SELECT * FROM items WHERE category_id = $1 ORDER BY name ASC",
@@ -41,6 +53,7 @@ async function getItemById(id) {
 module.exports = {
   getAllCategories,
   getCategoryById,
+  createCategory,
   getItemsByCategory,
   getItemById,
 };
