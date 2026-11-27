@@ -17,6 +17,8 @@
       <h1><%= category.name %></h1>
 
       <p><%= category.description || "Explore our collection." %></p>
+
+      <a href="/categories/<%= category.id %>/edit">Edit Category</a>
     </section>
 
     <section class="items-section">

@@ -7,6 +7,16 @@ categoriesRouter.get("/new", categoriesController.categoryCreateGet);
 categoriesRouter.post("/new", categoriesController.categoryCreatePost);
 
 categoriesRouter.get(
+  "/:categoryId/edit",
+  categoriesController.categoryUpdateGet
+);
+
+categoriesRouter.post(
+  "/:categoryId/edit",
+  categoriesController.categoryUpdatePost
+);
+
+categoriesRouter.get(
   "/:categoryId",
   categoriesController.categoryGet
 );

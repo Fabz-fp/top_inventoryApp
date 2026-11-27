@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Edit a SoundBurrow category.">
+  <title><%= title %> | SoundBurrow</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <%- include("../partials/header.ejs") %>
+
+  <main class="container">
+    <section class="form-section">
+      <a href="/categories/<%= category.id %>">← Back to Category</a>
+
+      <h1>Edit Category</h1>
+
+      <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+        <ul class="error-list">
+          <% errors.forEach((error) => { %>
+            <li><%= error %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+
+      <form action="/categories/<%= category.id %>/edit" method="POST">
+        <div class="form-group">
+          <label for="name">Category Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            maxlength="100"
+            value="<%= category.name %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+          ><%= category.description || "" %></textarea>
+        </div>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </section>
+  </main>
+
+  <%- include("../partials/footer.ejs") %>
+</body>
+</html>

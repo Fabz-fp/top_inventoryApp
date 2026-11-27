@@ -28,6 +28,18 @@ async function createCategory(name, description) {
   return rows[0];
 }
 
+async function updateCategory(id, name, description) {
+  const { rows } = await pool.query(
+    `UPDATE categories
+    SET name = $1, description = $2
+    WHERE id = $3
+    RETURNING *`,
+    [name, description || null, id]
+  );
+
+  return rows[0];
+}
+
 // ITEMS
 async function getItemsByCategory(categoryId) {
   const { rows } = await pool.query(
@@ -54,6 +66,7 @@ module.exports = {
   getAllCategories,
   getCategoryById,
   createCategory,
+  updateCategory,
   getItemsByCategory,
   getItemById,
 };
