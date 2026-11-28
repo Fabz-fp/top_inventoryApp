@@ -61,6 +61,50 @@ async function getItemsByCategory(categoryId) {
   return rows;
 }
 
+async function createItem(
+  name,
+  description,
+  brand,
+  model,
+  sku,
+  price,
+  stockQuantity,
+  imageUrl,
+  specifications,
+  categoryId
+) {
+  const { rows } = await pool.query(
+    `INSERT INTO items (
+      name,
+      description,
+      brand,
+      model,
+      sku,
+      price,
+      stock_quantity,
+      image_url,
+      specifications,
+      category_id
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    RETURNING *`,
+    [
+      name,
+      description || null,
+      brand || null,
+      model || null,
+      sku,
+      price,
+      stockQuantity,
+      imageUrl || null,
+      specifications || null,
+      categoryId,
+    ]
+  );
+
+  return rows[0];
+}
+
 async function getItemById(id) {
   const { rows } = await pool.query(
     `SELECT items.*, categories.name AS category_name
@@ -80,5 +124,6 @@ module.exports = {
   updateCategory,
   deleteCategory,
   getItemsByCategory,
+  createItem,
   getItemById,
 };
