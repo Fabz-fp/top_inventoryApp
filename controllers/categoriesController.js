@@ -76,6 +76,29 @@ async function categoryUpdatePost(req, res, next) {
   }
 }
 
+// POST DELETE
+async function categoryDeletePost(req, res, next) {
+  const categoryId = req.params.categoryId;
+
+  try {
+    const deletedCategory = await db.deleteCategory(categoryId);
+
+    if (!deletedCategory) {
+      return res.status(404).send("Category not found");
+    }
+
+    res.redirect("/");
+  } catch (error) {
+    if (error.code === "23503") {
+      return res.status(400).send(
+        "Cannot delete this category because it contains products."
+      );
+    }
+
+    next(error);
+  }
+}
+
 // POST NEW
 async function categoryCreatePost(req, res, next) {
   const name = (req.body.name || "").trim();
@@ -144,5 +167,6 @@ module.exports = {
   categoryCreatePost,
   categoryUpdateGet,
   categoryUpdatePost,
+  categoryDeletePost,
   categoryGet,
 };

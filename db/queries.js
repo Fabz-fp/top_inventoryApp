@@ -40,6 +40,17 @@ async function updateCategory(id, name, description) {
   return rows[0];
 }
 
+async function deleteCategory(id) {
+  const { rows } = await pool.query(
+    `DELETE FROM categories
+    WHERE id = $1
+    RETURNING *`,
+    [id]
+  );
+
+  return rows[0];
+}
+
 // ITEMS
 async function getItemsByCategory(categoryId) {
   const { rows } = await pool.query(
@@ -67,6 +78,7 @@ module.exports = {
   getCategoryById,
   createCategory,
   updateCategory,
+  deleteCategory,
   getItemsByCategory,
   getItemById,
 };
